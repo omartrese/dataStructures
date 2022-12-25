@@ -23,10 +23,10 @@ function mergeSort(array)
 {
     if(array.length <= 1) return array
     
-    left = array.splice(0, (array.length / 2) - 1)
-    right = array.splice()
+    let left = mergeSort(array.slice(0, array.length / 2))
+    let right = mergeSort(array.slice(array.length / 2))
 
-    return merge(mergeSort(left), mergeSort(right))
+    return merge(left, right)
 }
 
 
