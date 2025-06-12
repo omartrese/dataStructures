@@ -26,9 +26,9 @@ typedef struct
 } LinkedList;
 
 LinkedList newLinkedList(Type listType);
+bool Exists(LinkedList list, void *value);
 void PrintList(LinkedList *list);
 void Add(LinkedList *list, void *value);
-bool Exists(LinkedList list, void *value);
 void RemoveAt(LinkedList *list, size_t index);
 void Remove(LinkedList *list, void *value);
 void freeList(LinkedList list); 

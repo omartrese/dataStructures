@@ -19,6 +19,10 @@ int main()
 
     printf(Exists(myLinkedList, &(int){70}) ? "Existe el número 70" : "que va, aqui no hay na"); //test 2 --> check if value exists within the list
 
+    RemoveAt(&myLinkedList, 3);
+
+    PrintList(&myLinkedList);
+
     freeList(myLinkedList); //final test --> free linked list from memory 
     return 0;
 }
