@@ -8,6 +8,28 @@ LinkedList newLinkedList(Type listType)
     return list;
 }
 
+void PrintList(LinkedList *list)
+{
+    Node *current = list->head;
+    while (current != NULL)
+    {
+        switch (list->type)
+        {
+        case INTEGER:
+            printf("%d ", *(int *)current->value);
+            break;
+        case FLOAT:
+            printf("%.2f ", *(float *)current->value);
+            break;
+        case STRING:
+            printf("%s ", (char *)current->value);
+            break;
+        }
+        current = current->next;
+    }
+    printf("\n");
+}
+
 void Add(LinkedList *list, void *value)
 {
     Node *newNode = malloc(sizeof(Node));
@@ -16,29 +38,34 @@ void Add(LinkedList *list, void *value)
     list->head = newNode;
 }
 
-void PrintList(LinkedList *list)
+bool Exists(LinkedList list, void *value)
 {
-    Node *curr = list->head;
-    while (curr != NULL)
+    Node *current = list.head;
+
+    while (current != NULL)
     {
-        switch (list->type)
+        switch (list.type)
         {
         case INTEGER:
-            printf("%d ", *(int *)curr->value);
+            if (*(int *)current->value == *(int *)value)
+                return true;
             break;
         case FLOAT:
-            printf("%.2f ", *(float *)curr->value);
+            if (*(float *)current->value == *(float *)value)
+                return true;
             break;
         case STRING:
-            printf("%s ", (char *)curr->value);
+            if (strcmp((char *)current->value, (char *)value) == 0)
+                return true;
             break;
         }
-        curr = curr->next;
+        Node *next = current->next;
+        current = next;
     }
-    printf("\n");
+    return false;
 }
 
-void freeList(LinkedList list) 
+void freeList(LinkedList list)
 {
     Node *current = list.head;
     while (current != NULL)
@@ -48,5 +75,4 @@ void freeList(LinkedList list)
         free(current);
         current = next;
     }
-
 }

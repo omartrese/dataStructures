@@ -3,6 +3,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
+#include <string.h>
 
 typedef enum
 {
@@ -26,7 +28,7 @@ typedef struct
 LinkedList newLinkedList(Type listType);
 void PrintList(LinkedList *list);
 void Add(LinkedList *list, void *value);
-void Search(LinkedList *list, void *value);
+bool Exists(LinkedList list, void *value);
 void RemoveAt(LinkedList *list, size_t index);
 void Remove(LinkedList *list, void *value);
 void freeList(LinkedList list); 
