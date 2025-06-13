@@ -65,9 +65,28 @@ void Add(LinkedList *list, void *value)
     list->head = newNode;
 }
 
+void AddLast(LinkedList *list, void *value)
+{
+    Node *newNode = malloc(sizeof(Node));
+    newNode->value = value;
+    newNode->next = NULL;
+
+    if (list->head == NULL) {
+        list->head = newNode;
+        return;
+    }
+
+    Node *current = list->head;
+    while (current->next != NULL) {
+        current = current->next;
+    }
+    current->next = newNode;
+}
+
 void RemoveAt(LinkedList *list, size_t index)
 {
-    if (!list->head) return;
+    if (!list->head)
+        return;
 
     Node *current = list->head;
     Node *prev = NULL;
@@ -95,13 +114,61 @@ void RemoveAt(LinkedList *list, size_t index)
     free(current);
 }
 
-void freeList(LinkedList list)
+void Remove(LinkedList *list, void *value)
 {
-    Node *current = list.head;
+    Node *current = list->head;
     while (current != NULL)
     {
         Node *next = current->next;
-        free(current->value);
+        bool removeNode = false;
+        switch (list->type)
+        {
+        case INTEGER:
+            if (*(int *)current->value == *(int *)value)
+                removeNode = true;
+            break;
+        case FLOAT:
+            if (*(float *)current->value == *(float *)value)
+                removeNode = true;
+            break;
+        case STRING:
+            if (strcmp((char *)current->value, (char *)value) == 0)
+                removeNode = true;
+            break;
+        }
+        if (removeNode)
+        {
+            if (current == list->head)
+            {
+                list->head = current->next;
+                free(current->value);
+                free(current);
+                current = list->head;
+            }
+            else
+            {
+                Node *prev = list->head;
+                while (prev->next != current)
+                    prev = prev->next;
+                prev->next = current->next;
+                free(current->value);
+                free(current);
+                current = prev->next;
+            }
+        }
+        else
+        {
+            current = next;
+        }
+    }
+}
+
+void freeList(LinkedList *list)
+{
+    Node *current = list->head;
+    while (current != NULL)
+    {
+        Node *next = current->next;
         free(current);
         current = next;
     }
